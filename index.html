@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .my-scene {
+            display: flex;
+            width: 500px;
+            flex-wrap: wrap;
+        }
+        .my-square {
+        width: 50px;
+        height: 50px;
+        }
+        .red-square {
+            background-color: red;
+        }
+        
+        .green-square {
+        background-color: green;
+        }
+        
+
+
+        </style>
+</head>
+<body>
+    <input type="number" class="game-level-input">
+    <button class="start-game"> Start Game</button>
+    <button class="restart-game"> ReStart Game</button>
+    
+
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous">
+</script>   
+<script>
+    'use strict'
+
+let gameInterval;
+let startGameFlag = false;
+
+
+            function createScene() {
+        const  scene = $("<div class='my-scene'></div>");
+        const  square = $("<div class='my-square'></div>");
+        let sceneColorFlag = false;
+
+        for (let i = 0; i < 10; i++) {
+            for (let j = 0; j < 10; j++) {
+                if(j === 0) {
+                    sceneColorFlag = !sceneColorFlag;
+                } 
+        if(sceneColorFlag) {
+            scene.append(square.clone().addClass("red-square"))
+            sceneColorFlag = !sceneColorFlag;
+        } else {
+            scene.append(square.clone().addClass("green-square"))  
+            sceneColorFlag = !sceneColorFlag;
+        }
+    }   
+    }
+    $("body").append(scene)
+};
+
+function setUserComtrols() {
+const allSquares = $(".red-square");
+
+allSquares.on('click', function(e) {
+    if($(this).hasClass("red-square")) {
+        $(this).removeClass("red-square");
+        $(this).addClass("green-square");
+    };
+    checkGameResult();
+})
+};
+
+function changeColor() {
+    const greenSquares = $(".green-square");
+    const randomIndex = Math.floor(Math.random() * (greenSquares.length + 0) - 0);
+
+    const randomGreenSquare = $(greenSquares[randomIndex]);
+
+    if (randomGreenSquare.hasClass("green-square")){
+        randomGreenSquare.removeClass("green-square");
+        randomGreenSquare.addClass("red-square");
+    }
+};
+
+function runInterval(timer) {
+        gameInterval = setInterval(() => {
+            checkGameResult();
+
+            changeColor();
+
+        }, timer);
+    }
+function startGame(level) {
+
+createScene();
+setUserComtrols();
+runInterval(level);
+};
+
+function clearGame() {
+    $(".my-scene").remove();
+
+    clearInterval(gameInterval);
+    startGameFlag = false;
+};
+
+$(".start-game").on('click', () => {
+    let gameLevel = 10;
+    const levelInputVal = Number($(".game-level-input").val())
+    if(startGameFlag === false) {
+        if(levelInputVal < 11 && levelInputVal > 0) {
+            gameLevel =  levelInputVal
+        }
+        startGame(levelInputVal * 1000);
+        startGameFlag = true;
+    }
+});
+
+$(".restart-game").on('click', () => {
+    clearGame();
+
+    $(".start-game").trigger("click");
+});
+
+function checkGameResult() {
+    const greenSquaresLength = $(".green-square").length;
+    if ( greenSquaresLength === 100 ) {
+        alert('You win!!!');
+        clearGame();
+    } else if ( greenSquaresLength === 1 ) {
+        alert('You lose!!!');
+        clearGame();
+    }
+}
+
+// function checkGameResult() {
+//         const greenSquareLength = $(".green-square").length;
+
+//         if (greenSquareLength === 100) {
+//             alert('Winn !!!');
+
+//             clearGame();
+//         } else if (greenSquareLength === 0) {
+//             alert('Game over !!!');
+
+//             clearGame();
+//         }
+//     }
+
+</script> 
+
+</body>
+</html>

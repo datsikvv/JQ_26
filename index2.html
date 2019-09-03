@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .my-scene {
+            display: flex;
+            width: 500px;
+            flex-wrap: wrap;
+        }
+        .my-square {
+        width: 50px;
+        height: 50px;
+        }
+        .red-square {
+            background-color: red;
+        }
+        
+        .green-square {
+        background-color: green;
+        }
+        
+
+
+        </style>
+</head>
+<body>
+
+<form class="my-form" action="https://google.com">  
+    <input type="text" value="Ivan" class="input-name">
+    <input type="text" value="Ivanov" class="input-surname">
+    <input type="submit">
+</form>
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous">
+</script>   
+<script>
+
+    'use strict'
+
+    function Validator(options) {
+        this.form = $(options.form);
+        this.inputs = options.inputs;
+
+        this.init();
+    }
+
+    Validator.prototype.init = function() {
+        this.inputs.forEach((el, i) => {
+
+            this.onBlur(el.name, el.ruls)
+
+        })
+        
+    };
+
+    Validator.prototype.onBlur = function(element, ruls) {
+        $(element).on("blur", function(event) {
+            if (this)
+        });
+    };
+
+    Validator.prototype.minLength = function(val, min) {
+        if (val.length < min) {
+            return true;
+        }
+        return false
+  
+    };
+
+    Validator.prototype.validate = function() {
+        console.log(this.form);
+    }
+
+    const validator = new Validator({
+        form: ".my-form",
+        inputs: [
+            {
+                name: ".inpun-name",
+                ruls: [
+                    {
+                        key: "minLength",
+                        value: 5
+                    }
+                ]
+
+            }
+        ]
+
+    });
+
+
+
+    const inputs = $("input");
+    const minLength = 10;
+     
+    // inputs.on('change', function() {
+    //     //to do chrek from server
+    //     console.log($(this).val())
+    // })
+
+    // inputs.on('focus', function() {
+    //     //to do chrek from server
+    //     console.log($(this).val())
+    // })
+
+    // inputs.on('blur', function() {
+    //     //to do chrek from server
+    //     console.log($(this).val())
+    // })
+
+
+
+$("form").on('submit', function(e) {
+    const inputNameVal = $(".input-name").val();
+
+    if (inputNameVal === "") {
+        return false;
+    }
+
+
+})
+
+
+  
+
+</script> 
+
+</body>
+</html>
